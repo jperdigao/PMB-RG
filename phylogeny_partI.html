@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Phylogenetics and Public Health - Part I</title>
+	<link rel="stylesheet" type="text/css" href="css/styles.css">
+
+
+</head>
+<body>
+
+<div class="top-bar" >
+
+	<h1>PATHOGEN MULTIOMICS AND BIOINFORMATICS</h1>
+</div>
+
+<div class="container1" >
+	<p>
+
+	</p>
+<h1  align="center">::Introduction to Phylogenetics and Public Health - Part I::</h1>
+</div>
+<div class="container1" >
+<h1  align="right">
+	<p>
+
+	</p>
+
+</h1>
+</div>
+
+<a href="index.html" target="_blank"><<-HOME</a>
+<div>
+<object data="pdfs/M4_PhylogeneticsI.pdf#page=1" type="application/pdf" width="100%" height="500px">
+          <p><b>Example fallback content</b>: This browser does not support PDFs. Please download the PDF to view it:
+          <a href="pdfs/M2_Assembly.pdf">Download PDF</a>.</p>
+</object>
+</div>
+
+
+<div class="container2" >
+<h1  align="right">
+	<p>
+
+	</p>
+	<p>
+
+	</p>
+</h1>
+</div>
+<p>  </p>
+<p>  </p>
+<p>  </p>
+<p> Click <a href="pdfs/Module 4A_doc.pdf" target="_blank">here</a> to download the PDF version of this tutorial.</p>
+
+
+<h2>A. Multiple sequence alignment (MSA) with MEGA X</h2>
+<p>
+MEGA X (http://www.megasoftware.net ) is a software package for performing sequence alignment, estimating genetic distances, reconstructing phylogenetic trees and several other evolutionary analyses.
+</p>
+<p>
+  &emsp;• A.1. Open MEGA X.
+</p>
+<img src="images/mega.png" alt="blank space", style="max-width: 50%;">
+<p>
+  &emsp;• A.2. Upload the fasta file NS5A_All_R200.fas. Align > Edit/Build Alignment > Retrieve sequences from a file > File directory (CentosHome > Module4 > HCV_dataset1 > Alignment files > NS5A_All_R30.fas).
+</p>
+<img src="images/mega2.png" alt="blank space", style="max-width: 50%;">
+
+<p><i>Q1: Are the sequences aligned?</i><p>
+<br>
+<br>
+<br>
+<p></p>
+<img src="images/file_naming.png" alt="blank space">
+
+<p>This dataset of HCV NS5A GT1a was taken from Palladino et al., 2020, Sci Rep. (https://doi.org/10.1038/s41598-020-69692-7). </p>
+
+<p>Alignment contains: Reference strains e.g. Rf1b_EU781828, GT1a	clade	I	e.g.	554M1m_CAN_14	and	II	e.g. 519C2f_PAI_15 from Spanish autonomous regions.</p>
+
+<p>For this session and follow-up sessions we will be focusing on only Spanish HCV NS5A GT1a clade I.</p>
+
+<p>(Save all new fasta files for today´s session in Module4 > HCV_dataset1 directory)</p>
+
+
+<p>
+MEGA X produces multiple sequence alignments by either ClustalW or Muscle algorithms. Additionally, you can do a codon alignment if your nucleotide sequences code for a protein; this way the alignment produced will preserve the reading frame of those sequences.</p>
+<p> &emsp;• A.3. In our example we will choose Muscle align codons (with the default settings), since our DNA sequences code for the HCV NS5A protein. Alignment > Align by Muscle (codons) > Select all. Usually the default settings are adequate for your needs. No for Remove Gaps.</p>
+<p> &emsp;• A.4. Now you finally have your sequences aligned, you should also make a visual inspection of the alignment and make any necessary modifications manually.</p>
+<p><i>&emsp;Q2.1: Are there any misaligned columns?</i></p>
+
+<p><i>&emsp;Q2.2: Any gappy sequences? What can you say about these sequences (969M1m_ARA_15, 981, and 983C1m_AST_15)?</i></p>
+
+<p>
+Toggle between the DNA Sequences and Translated Protein Sequences to look at the corresponding amino acid sequences (use the Standard code). To prepare your alignment for further analysis, make sure that all sequences start and end at the same position; if necessary, select the extra columns in the beginning and/or at the end of the DNA Sequences and delete them using the Delete Selected block icon (or EDIT > DELETE). In most situations any gaps in the middle of the alignment should also be deleted. Rule of thumb: if the majority of sequences(>50%) have agap in a given position (column), then thatposition should bedeleted; otherwise, you can keep that gap. Delete also any ambiguous aligned positions. If necessary,
+you can select a nucleotide (or a block of nucleotides) and move them sideways using the corresponding icons in the toolbar. VERY IMPORTANT: in order to preserve the biological significance of codon alignments, make sure you preserve the reading frame of your sequences. Hence, any gaps that you delete or create by moving sideways some nucleotides, must be made in multiples of threes.
+</p>
+<p>&emsp;Q3: Are there stop codons in the alignment? Introduce gaps at the start of the DNA sequence and observe if there is any changes in the open reading frame (Protein sequence).</p>
+
+
+<p> &emsp;• A.4. Editing the name of a sequence is easy. Double-click the name of a sequence and edit it or write a new one (but you should keep the Accession number!!). You can insert sequences from other fasta file by clicking Insert sequences from MEGA/Fasta/Text icon on the tool bar of MEGA.</p>
+<p> &emsp;• A.5. If you’re done with editing and satisfied with your alignment export it in MEGA format (to use in MEGA for further analysis) or in FASTA or NEXUS formats (to use in other phylogenetic programs). In our case, please export (Data > Export Alignment) in FASTA (NS5A_All_R30.fas) formats.</p>
+
+<p>As part of quality control we will prepare another MSA file excluding the following drug resistance associated substitutions (RAS): How many RAS can you spot in the MSA?</p>
+<p> &emsp;o K24G/N/R (n/b: codon position 24 = base positions 70, 71 and 72)</p>
+<p> &emsp;o K26E</p>
+<p> &emsp;o M28A/G/T/V</p>
+<p> &emsp;o Q30C/D/E/G/H/I/K/L/N/R/S/T/Y</p>
+<p> &emsp;o L31F/M/P/V<p>
+<p> &emsp;o P32L/S</p>
+<p> &emsp;o S38F</p>
+<p> &emsp;o H58D/L/R</p>
+<p> &emsp;o A92K/T</p>
+<p> &emsp;o Y93C/F/H/L/N/R/S/T/W</p>
+<p>&emsp;•	A.7. Identify RAS in the alignment and delete these RAS codons starting from the end of the alignment. Toggle between the Protein sequences and DNA sequences as above. Export alignment as NS5A_SPnoRAS040723.fas.</p>
+
+
+
+<h3>Aliview</h3>
+
+<p>http://tree.bio.ed.ac.uk/software/figtree/</p>
+<p>This is a user-friendly MSA tool, particularly useful for manipulating large sequence datasets.</p>
+
+<p>Open Aliview > load sequences (drag and drop). Repeat the above procedure in Aliview (input file: NS5A_All_R200.fas) and compare this with MSA using MEGA X.</p>
+
+<img src="images/aliview.png" alt="blank space">
+
+<br>
+
+<h2>B. Maximum Likelihood tree reconstruction as implemented in IQ-Tree program</h2>
+
+<a href="http://www.iqtree.org/" target="_blank">http://www.iqtree.org/</a>
+
+<pre>
+$ cd HCV_dataset1
+</pre>
+<p>
+We will first perform a Model test in IQ-Tree as follows:
+</p>
+<pre>
+$ iqtree -s NS5A_SPnoRAS040723.fas -m TESTONLY
+</pre>
+<p> -s is the option to specify the name of the alignment file that is always required by IQ-TREE to work.</p>
+
+<p>	-m TEST is the option to call up the model test without tree reconstruction.<p>
+<p>
+&emsp;Q4.1. What are the best models according to AIC and BIC?
+</p>
+
+<p>	<b>Troubleshooting:</b> If there is an error with executing the .fas file, open the file in a text editor to confirm that the sequence names are well written, probably missing underscores. Fix error by renaming the sequence names as follows (new file name  old file name): <p>
+
+<pre>
+$ sed 's/ /_/g' NS5A_SPnoRAS040723.fas > NS5A_SPnoRAS040723T.fas
+</pre>
+
+<p>
+Next, we will combine both Model search with ML tree reconstruction and bootstrap branch support:
+</p>
+<pre>
+$ iqtree -s NS5A_SPnoRAS040723.fas -m MFP -b 1000
+</pre>
+<p>
+-m MFP is the option to specify the model name to use during the analysis and MFP(Modelfinder Plus) performs the model selection search similar to the JModel test that will be used for the tree reconstruction.
+</p>
+
+<p>
+To minimize the demanding computation imposed by bootstrap we will proceed instead with alternative branch supports UFboot and aLRT:
+</p>
+
+<pre>
+$ iqtree -s NS5A_SPnoRAS040723.fas -m MFP -bb 1000 -alrt 1000 -redo
+</pre>
+<p>
+-bb 1000 specifies the number of replicates for UFBoot: IQ-TREE assesses branch support using an ultrafast bootstrap approximation (UFBoot) that is orders of magnitude faster than the standard bootstrap procedure.
+</p>
+<p>
+-alrt 1000 specifies the number of iterations for the approximate likelihood rate test (aLRT)
+</p>
+<p>
+At the end of the run IQ-TREE will write several output files including:
+</p>
+
+<p> &emsp;• example.phy.iqtree: You should look at this file to see the computational results. It also contains a textual representation of the final tree.</p>
+
+<p> &emsp;• example.phy.treefile: the ML tree in NEWICK format, which can be visualized by any supported tree viewer programs like FigTree or iTOL.</p>
+
+<p> &emsp;• example.phy.log: log file of the entire run (also printed on the screen).<p>
+
+<p> &emsp;• use -redo to overwrite files</p>
+
+
+<br>
+<h2>C. Figtree – Phylogenetic tree visualisation and annotation</h2>
+
+<a href="http://tree.bio.ed.ac.uk/software/figtree/" target="_blank">http://tree.bio.ed.ac.uk/software/figtree/</a>
+
+<p> &emsp;• C.1. Import the file NS5A_SPnoRAS040723.fas.treefile into the figtree program: <b>file > open > ‘tree file’</b>. If a prompt appears (this usually happens with ML trees), specify the type of branch support for the tree e.g. Bootstrap or aLRT </p>
+
+<p> &emsp;• C.2. In the Layout menu, you can toggle between <b>rectangular, polar and radial layout</b>. Use the <b>Fisheye</b> for a quick zoom of nodes: make a single slide on the <b>fisheye</b>, move the <b>cursor</b> up and down the tree while holding-down the <b>ctrl key</b>. <b>Further editing of treeswillbedemonstrated in thecomputersession: colourschemes and highlight, annotation of relevant branch supports (>70% boot) etc</b> </p>
+
+
+<img src="images/figtree.png" alt="blank space", style="max-width: 50%;">
+
+<img src="images/figtree2.png" alt="blank space", style="max-width: 50%;">
+
+
+<p><i>&emsp;Q5.1. How does UFboot compare to the aLRT?</i></p>
+
+<p><i>&emsp;Q5.2. Can you identify any transmission pairs/clusters in the ML tree?</i></p>
+
+<p> &emsp;• C.3. Export your tree files in Newick and PDF formats after editing.</p>
+
+<br>
+<h2>D. ClusterPicker – Transmission Clusters Identification</h2>
+
+<a href="https://hiv.bio.ed.ac.uk/software.html" target="_blank">https://hiv.bio.ed.ac.uk/software.html</a>
+
+<p>ClusterPicker is a useful tool for identifying transmission pairs and transmission clusters given a sequence alignment file and a tree file. Clusters are defined by branch supports (bootstrap and aLRT in percentages and Posterior probabilities in decimals). Watch out for incompatibilities of ClusterPicker with ML tree programs!</p>
+<p>
+We will rebuild an ML tree as before but with a single branch support parameter – aLRT, otherwise ClusterPicker won´t be able to read the dual branch supports UFBoot/aLRT.
+</p>
+<p>
+Run this to overwrite the previous treefile with only aLRT as branch support:
+</p>
+<pre>
+$ iqtree -s NS5A1a1_SPnoRAS120722.fas -m MFP -alrt 1000 -redo
+</pre>
+<p>
+<u>*This is a larger dataset (clade 1, n=104) that we will use for the remainder of this course</u>
+</p>
+<p>
+Import the treefile and corresponding fas/fasta files into ClusterPicker as shown below:
+</p>
+<img src="images/clusterpicker.jpg" alt="blank space">
+
+<p>
+Output files:
+<p>
+<p>
+NS5A1a1_SPnoRAS120722.fas_clusterPicks.nwk - renamed tree file
+</p>
+<p>
+NS5A1a1_SPnoRAS120722.fas_clusterPicks.nwk.FigTree - coloured figtree file
+</p>
+<p>
+NS5A1a1_SPnoRAS120722.fas_clusterPicks_log.txt - log text file
+</p>
+<p>
+Open the log text file for detailed descriptions of the transmission cluster.
+</p>
+<p>
+<i>&emsp;Q6. Can we enforce more restrictive transmission cluster parameters? How many TCs do we have with a Bootstrap/aLRT = 90 and GD = 1.5% (0.015)?</i>
+</p>
+<p>
+Open the coloured figtree file and observe the new annotation and compare this with your response to Q5.2 above.
+</p>
+<br>
+<h2>E. TEMPEST – Temporal signal</h2>
+
+<a href="https://beast.community/tempest" target="_blank">https://beast.community/tempest</a>
+<p>
+Prior to delving into spatio-temporal analysis under Bayesian astatistics as implemented in the BEAST package we will use TempEst to determine the temporal signal and ‘clocklikeness’ of molecular phylogenies of our dataset. It is designed for analysing trees that have not been inferred under a molecular-clock assumption (Sections A-D) to see how valid this assumption may be. Importantly, it can also root the tree at the position that is likely to be the most compatible with the assumption of the molecular clock.
+</p>
+<p>
+ &emsp;• Once TemPest is opened it will immediately open a dialogue box to input your treefile. Select NS5A1a1_SPnoRAS120722.fas.treefile
+</p>
+
+<img src="images/tempest.png" alt="blank space", style="max-width: 50%;">
+
+<p>	&emsp;• First, we specify the dates of the sequences in calendar years using the Parse Dates button on top of the panel. Recall the order of the naming sequence (Section A, also displayed in the TemPest console) and notice that ¨year¨ is the third item, and the separating prefix is an underscore ¨_¨
+</p>
+
+<img src="images/tempest2.png" alt="blank space", style="max-width: 50%;">
+
+<p>
+The dates in calendar years and Heights (year difference from the most recently sampled sequence 2015 in this case) for all the sequences will be displayed if properly parsed.
+</p>
+<img src="images/tempest3.png" alt="blank space", style="max-width: 50%;">
+
+<p>	&emsp;• Next, we explore the Tree, Root-to-tip, and Residuals panels.</p>
+
+<img src="images/tempest4.png" alt="blank space", style="max-width: 50%;">
+
+<p>
+<i>&emsp;Q7.1. What changes can be observed in the parameters listed in the left panel when you check the Best-fitting root? And when you switch between the different top panels, what changes do you observe?</i>
+</p>
+
+<p>
+<i>&emsp;Q7.2. Is there sufficient temporal signal in our dataset? Why is this so?</i>
+</p>
+
+
+<p> </p>
+<p> </p>
+<p> </p>
+
+<a href="index.html" target="_blank"><<-HOME</a>
+</body>
+</html>
