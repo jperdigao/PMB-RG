@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>RNA-Seq and Transcriptomics </title>
+	<link rel="stylesheet" type="text/css" href="css/styles.css">
+
+
+</head>
+<body>
+
+<div class="top-bar" >
+
+	<h1 align="center">INTRODUCTION TO TUBERCULOSIS GENOMIC EPIDEMIOLOGY</h1>
+</div>
+
+<div class="container1" >
+	<p>
+
+	</p>
+<h1  align="center">::RNA-Seq and Transcriptomics::</h1>
+<h3  align="center">6.2 Case-Study: Pseudomonas aeruginosa Transcriptomics – Pf4 phage variant induced dysregulation</h3>
+</div>
+<div class="container1" >
+<h1  align="right">
+	<p>
+
+	</p>
+
+</h1>
+</div>
+
+<a href="index.html" target="_blank"><<-HOME</a>
+<div>
+<object data="pdfs/comingsoon.pdf#page=1" type="application/pdf" width="100%" height="500px">
+          <p><b>Example fallback content</b>: This browser does not support PDFs. Please download the PDF to view it:
+          <a href="pdfs/comingsoon.pdf">Download PDF</a>.</p>
+</object>
+</div>
+
+
+<div class="container2" >
+<h1  align="right">
+	<p>
+
+	</p>
+	<p>
+
+	</p>
+</h1>
+</div>
+<p>  </p>
+<p>  </p>
+<p>  </p>
+<p> Click <a href="pdfs/Course_doc_all.pdf.pdf" target="_blank">here</a> to download the full course documentation conatining this tutorial.</p>
+
+<br>
+<h2>Introduction</h2>
+
+<p><i>Pseudomonas aeruginosa</i> is a Gram-negative opportunistic pathogen that is commonly present in diverse environments such as water, soil or plants [1]. This pathogen is one of the most frequent agents of healthcare-associated infections and frequently associated with multidrug resistance [2, 3]. Moreover, this species has intrinsic resistance to several antibiotics and also displays numerous virulence factors [4]. Previous data obtained by Tortuel et al (2022) showed that infection of <i>P. aeruginosa</i> with a Pf4 variant bacteriophage displayed altered expression of genes involved in stress response [5]. This practical covers the partial analysis of the global transcriptomic study developed by the authors using <i>P. aeruginosa</i> in untreated conditions and those treated with the Pf4 variant bacteriophage.</p>
+
+<p>Citation:<p>
+<p>Tortuel D, Tahrioui A, David A, Cambronel M et al. Pf4 Phage Variant Infection Reduces Virulence-Associated Traits in <i>Pseudomonas aeruginosa</i>. Microbiol Spectr 2022 Oct 26;10(5):e0154822. PMID: 36036571</p>
+
+
+<p>The data for this practical is available through the NCBI Gene Expression Omnibus (GEO) database under accession GSE201738. The dataset comprises six samples, subjected to RNA-Seq by paired-end sequencing, representing a Pf4-infected and Pf4-uninfected strains (three biological replicates each, Table 1):</p>
+
+<img src="images/pa_table1.png" alt="blank space", style="max-width: 70%;">
+
+<p>The practical is divided in three exercises, Exercise 1 pertains the mapping and generation of raw transcript count and has been carried out ahead since the computational steps involved are time consuming. Nonetheless, the commands executed are outlined below along with explanatory context. The second exercise will involve the visualization of mapped reads and the third exercise will cover the identification of differentially expressed genes across the conditions tested.</p>
+<br>
+<br>
+<h2>Exercise 1 – Mapping and Raw read Count</h2>
+
+<p>The initial stage of the analytical process of RNA-Seq data for this practical will consist of mapping the reads to a reference genome following a similar approach as the one already covered in the mapping module for this course. As such, this will require an adequate genome reference file. An annotation file covering all genes in this same reference genome will also be needed. We will use the genome of Pseudomonas aeruginosa PAO1 as reference genome, which has already been downloaded in the FASTA format, GenBank format and annotation (GFF3) from NCBI GenBank (accession NC002516). The following files are therefore already present in the course module directory in the Pa subdirectory. Let’s start!</p>
+
+<p>From the home directory type:</p>
+
+<pre>
+$ cd Module6/Pa
+
+$ ls
+</pre>
+
+<p>Please note for the following files:</p>
+<p>•	NC002516_2.fasta – reference genome in the fasta format;</p>
+<p>•	NC002516_2.gb  - reference genome in the GenBank format;</p>
+<p>•	NC002516_2.gff3 – annotation file in the GFF3 format.</p>
+<p>You can look inside these files to confirm its format.</p>
+
+
+
+<p>In the same directory you will find compressed FastQ files containing the RNA-Seq raw reads. Each is named according to the Run ID in Table 1 and if this is paired-end sequencing, it will have _1.fastq.gz or _2.fastq.gz appended to the Run ID.</p>
+<p>Which one do you have? ____________________________</p>
+
+<p>The mapping steps were done using the following commands:</p>
+
+
+
+<pre>
+$ bwa mem NC002516_2.fasta SRR18957713_1.fastq.gz SRR18957713_2.fastq.gz | samtools sort --write-index -o SRR18957713.bam -
+$ bwa mem NC002516_2.fasta SRR18957714_1.fastq.gz SRR18957714_2.fastq.gz | samtools sort --write-index -o SRR18957714.bam -
+$ bwa mem NC002516_2.fasta SRR18957715_1.fastq.gz SRR18957715_2.fastq.gz | samtools sort --write-index -o SRR18957715.bam -
+$ bwa mem NC002516_2.fasta SRR18957716_1.fastq.gz SRR18957716_2.fastq.gz | samtools sort --write-index -o SRR18957716.bam -
+$ bwa mem NC002516_2.fasta SRR18957717_1.fastq.gz SRR18957717_2.fastq.gz | samtools sort --write-index -o SRR18957717.bam -
+$ bwa mem NC002516_2.fasta SRR18957717_1.fastq.gz SRR18957717_2.fastq.gz | samtools sort --write-index -o SRR18957717.bam -
+$ bwa mem NC002516_2.fasta SRR18957718_1.fastq.gz SRR18957718_2.fastq.gz | samtools sort --write-index -o SRR18957718.bam -
+
+</pre>
+
+<p>Each command allows for mapping of the reads using BWA MEM algorithm and pipes it to samtools in order generate a BAM containing all mapped reads and reference. Next you need to index the BAM file by typing:</p>
+<pre>
+$ samtools index SRR18957713.bam
+$ samtools index SRR18957714.bam
+$ samtools index SRR18957715.bam
+$ samtools index SRR18957716.bam
+$ samtools index SRR18957717.bam
+$ samtools index SRR18957718.bam
+
+</pre>
+
+<p>At this point you can already visualize your mapping data but we will leave it to the second part of this practical. For now we need to count the number of reads mapped to each feature/gene. Please note that for this stage you will need to know the position, i.e., start, stop and strand of the genes in your gene. This information is not present in the FASTA reference genome you used to map the reads nor you can extract it directly from the BAM files. This is where the GFF file is needed! You will be using HTSeq to count the reads in the genes, specifically its htseq-count script [7]. By typing:</p>
+
+
+<pre>
+$ htseq-count
+#or
+$ htseq-count --help
+</pre>
+
+<p>You will learn a little bit of the different files needed, arguments to this command and output. You can produce the files containing the raw counts by doing the following:</p>
+<pre>
+$ htseq-count -f bam -r pos -s reverse -t gene -i Name SRR18957713.bam NC002516_2.gff3 > SRR18957713_count.txt
+$ htseq-count -f bam -r pos -s reverse -t gene -i Name SRR18957714.bam NC002516_2.gff3 > SRR18957714_count.txt
+$ htseq-count -f bam -r pos -s reverse -t gene -i Name SRR18957715.bam NC002516_2.gff3 > SRR18957715_count.txt
+$ htseq-count -f bam -r pos -s reverse -t gene -i Name SRR18957716.bam NC002516_2.gff3 > SRR18957716_count.txt
+$ htseq-count -f bam -r pos -s reverse -t gene -i Name SRR18957717.bam NC002516_2.gff3 > SRR18957717_count.txt
+$ htseq-count -f bam -r pos -s reverse -t gene -i Name SRR18957718.bam NC002516_2.gff3 > SRR18957718_count.txt
+
+</pre>
+
+<p>Can you check why are we using those extra arguments besides the BAM and the GFF file?
+Also, please note that the output is being redirected to files named *_count.txt files. Look at their content. Does it resemble something like this:</p>
+
+<img src="images/counts.png" alt="blank space", style="max-width: 70%;">
+
+<p>These files contain the raw read counts for each gene and will be used as input for the Differential Gene Expression analysis in Exercise 3. But before that let us visualize the mapped data so that you can understand better what we have done so far and what these counts represent.</p>
+
+<p>Notice that you already have the files with the raw counts! To download all previously created BAM files and index files for this practical session, please go to: </p>
+
+<a href="https://ulisboa-my.sharepoint.com/:f:/g/personal/jperdigao_office365_ulisboa_pt/EkBjH_nIesdIlqBXPIXy3_oB4NG7dg4RAksXHik2lODmbQ?e=fyu1w7">https://ulisboa-my.sharepoint.com/:f:/g/personal/jperdigao_office365_ulisboa_pt/EkBjH_nIesdIlqBXPIXy3_oB4NG7dg4RAksXHik2lODmbQ?e=fyu1w7</a> 
+
+<p></p>
+<p>and download the bam_files_KP.tar.gz file (use command: tar -xvf bam_files_KP.tar.gz to decompress the file). Run this last command in the Pa sub-directory after downloading the file to this location.</p>
+<br>
+<br>
+<h2>Exercise 2 – Visualization of RNA-Seq mapped data</h2>
+<p>For the next exercise you can visualize the mapped reads in Artemis. Inside the directory containing the data, type:</p> 
+<pre>
+$ art
+</pre>
+<p>This will start Artemis. You must first load your reference genome, which can be done in multiple ways: </p>
+
+<p>i) you can open the NC002516_2.gb file, containing the genome and features in the GenBank file, or;</p>
+<p>ii) you can open the NC002516_2.fasta file and then read in the GFF file so that you can see the different feature tracks.
+</p>
+
+
+<p>Next, you need to read in your BAM files. You can start by going to File >> Read BAM/VCF and select the first BAM file from the list. Please remember that to load a BAM file in Artemis you need to have the BAM file and the respective .bai index file in the same directory. If everything went ok a BAM window with the mapped reads should appear on top of the genome:</p>
+
+<img src="images/bam_viewPa.png" alt="blank space", style="max-width: 70%;">
+
+<p>Depending on whether the genome map window is too zoomed in or out you will see the individual reads or a plot. You can change the zoom level in the vertical scroll bar on the right and by right clicking on the BAM window you can also select the type of graph under View (try changing between pileup and coverage for example).</p>
+
+<img src="images/bam_viewPa2.png" alt="blank space", style="max-width: 70%;">
+
+<p>Let’s look at a particular gene, for example <i>lepB</i>, by using the Navigator (Goto >> Navigator) and typing the gene name in the appropriate search box.</p>
+
+<img src="images/lepB.png" alt="blank space", style="max-width: 70%;">
+
+<p>Notice that in the vicinity of these genes, there are some with no/low coverage while others have coverage and there are even reads mapping to intergenic regions. Why is that?</p>
+
+<p>Next, you can add and compare the coverage from other BAM files. To do this just right click on the BAM window, select “Add BAM” and add the different BAM files. Also, changing the Graph type to coverage will facilitate the interpretation of the Data. By right clicking on the BAM window you also have the option to configure these lines (changing the colour, thickness, etc.).</p>
+
+<img src="images/aprA.png" alt="blank space", style="max-width: 70%;">
+
+<p>Can you find any differentially expressed genes (DEG) using this approach?</p>
+<p>Hint: Try the <i>aprA</i> gene!</p>
+<br>
+<br>
+
+<h2>Exercise 3 – Examining Differential Expression</h2>
+
+<p>This last exercise is aimed at identifying differentially expressed genes (DEGs) by taking the raw counts as input to software that normalizes the number of mapped reads and apply statistical tests to identify DEGs. The most widely used packages for this purpose are the R packages DESeq2 and EdgeR. In this practical we will use DESeq2 to identify DEGs, but code DEG identification using EdgeR is also provided and you can even compare the results between packages [8, 9].</p>
+<p>It is also important to stress that using different replicates is a fundamental aspect of DEG analysis as expression levels are variable and depend on several external factors. Biological replicates are therefore essential to account for the variability of biological systems and more accurately compare expression levels between groups/conditions.</p>
+
+<p>The exercise will be carried out in R which involves a different programming language. Let’s go step by step.
+Let’s start R by typing:</p>
+<pre>
+$ R
+</pre>
+<p>Inside the R command line we need to load the required libraries for this part:</p>
+
+<pre>
+> library(DESeq2)
+> library(gplots)
+</pre>
+<p>Next we will list the files with counts into an object called sampleFiles and create an object with the condition/genotype. It is important that the order of the genotypes is the same as the order of the listed files:</p>
+
+<pre>
+> sampleFiles<-list.files(pattern="count.txt$")
+#Use the same order from the sampleFiles object:
+> sampleCondition <- c("Pf4", "Pf4", "uninfected", "Pf4", "uninfected", "uninfected")
+</pre>
+
+<p>We can then create a data frame, which is a type of R object with a table structure called sampleTable:</p>
+
+<pre>
+> sampleTable <- data.frame(
+  sampleName = gsub("_count.txt","",sampleFiles),
+  fileName = sampleFiles,
+  condition = sampleCondition
+)
+</pre>
+
+
+<p>Notice that you defined the columns in this data frame and for sample names you run the object containing the file list through a substitution command to remove the suffix of the file names.</p>
+
+<p>You can check the structure of the data frame just by typing:</p>
+<pre>
+> sampleTable
+</pre>
+<p>Please check if everything as we will next move to the analytical stage. You can import the HTSeq counts into a DESeqDataSet object and look at the contents of this object by running the following:</p>
+<pre>
+> dds <- DESeqDataSetFromHTSeqCount(
+  sampleTable = sampleTable,
+  design = ~ condition
+)
+
+> dds 
+</pre>
+<p>Pay attention to the design argument of the first function, you need to specify the grouping factor. This argument can accommodate multiple designs, this is the simplest design scheme in which you specified the name of a single column from your original dataframe.</p>
+
+<p>A pre-filtering step can be carried out to reduce the number of genes with a count below 10. This step is not essential but it can help to reduce the size of the DESeqDataSet object. To do this, run the following:</p>
+
+<pre>
+> keep <- rowSums(counts(dds)) >= 10
+> dds <- dds[keep,]
+</pre>
+
+<p>Next, setting the factor levels is important to define the reference level (control group). If this is not specified the levels will be taken in alphabetical order and the reference level will be assumed to be the first one. Below there are two options to set the levels:</p>
+<pre>
+> dds$condition <- factor(dds$condition, levels = c("uninfected", "Pf4"))
+# Notice that wt comes first as this is the natural reference group (control)
+# or
+> dds$condition <- relevel(dds$condition,ref="uninfected")
+
+</pre>
+
+<p>The differential expression analysis is carried out using the DESeq function that takes the DESeqDataSet object as input, does the normalization of the counts, estimates dispersion and additional statistical tests. After, the result table can be generated using the results function results:</p>
+
+<pre>
+> dds <- DESeq(dds)
+> res <- results(dds, contrast = c("condition","Pf4","uninfected"))
+
+</pre>
+
+
+<p>In the second command we have just used the contrast argument to the results function which might not be necessary but enables you to specifically control the comparison being made across groups. To look at the results table just type:</p>
+
+
+<pre>
+> res
+</pre>
+
+
+<p>What do you see? Something like this:</p>
+
+<img src="images/res_Kp.png" alt="blank space", style="max-width: 70%;">
+
+<p>You can summarize the results by running:</p>
+<pre>
+> summary(res)
+</pre>
+
+<img src="images/summary_resKp.png" alt="blank space", style="max-width: 70%;">
+
+<p>You should see the standard adjusted p-value threshold used for the summary and the number of genes with a Log2 Fold Change (LFC) above and below 0. </p>
+
+
+<p>Next let’s remove results with no adjusted p-values and sort the table by this value:</p>
+
+
+<pre>
+> res <- res[!is.na(res$padj),]
+> resOrdered <- res[order(res$pvalue),]
+> resOrdered
+</pre>
+
+<p>You can construct a heatmap for the top 50 genes using the following commands:</p>
+
+<pre>
+> counts_heatmap <- counts(dds, normalized = TRUE)
+> idx <- rownames(resOrdered)[1:100]
+> counts_heatmap <- counts_heatmap[rownames(counts_heatmap)%in%idx,]
+
+> counts_heatmap
+
+> colnames(counts_heatmap) <- c("Pf4_1", "Pf4_2", "uninfected_1", "Pf4_3", "uninfected_2", "uninfected_3")
+>heatmap.2(as.matrix(counts_heatmap), scale="row", col=greenred(75), Rowv=NA, dendrogram = "col", trace="none", density.info = "none")
+
+</pre>
+
+<p>Another option is to visualize Gene Plot Counts for multiple genes:</p>
+<pre>
+> par(mfrow=c(2,3))
+> plotCounts(dds,gene="PA0048", intgroup="condition")
+> plotCounts(dds,gene="PA0049", intgroup="condition")
+> plotCounts(dds,gene="PA0122", intgroup="condition")
+> plotCounts(dds,gene="PA5160.1", intgroup="condition")
+> plotCounts(dds,gene="nosY", intgroup="condition")
+> plotCounts(dds,gene="PA0100", intgroup="condition")
+> par(mfrow=c(1,1))
+
+</pre>
+
+<p>You can also do a Principal Component Analysis of the results:</p>
+<pre>
+> vsdata<-vst(dds,blind=FALSE)
+> z <- plotPCA(vsdata,intgroup="condition")
+> z + coord_fixed(ylim=c(-40,40), xlim=c(-40,40))
+
+</pre>
+
+<p>Do the global transcriptomic signatures from different conditions cluster in this analysis?</p>
+
+<p>For a Volcano Plot, you can construct a basic one:</p>
+
+<pre>
+> with(res, plot(log2FoldChange, -log10(pvalue), pch=20,main="Volcano plot",xlim=c(-8,8)))
+</pre>
+<p>or highlight in blue if the adjusted p-value is below 0.01 or red if the adjusted p-value is below 0.01 and the Log2 Fold Change is higher than 1:</p>
+<pre>
+> with(subset(res,padj<.01),points(log2FoldChange, -log10(pvalue),pch=20,col="blue"))
+> with(subset(res,padj<.01 & abs(log2FoldChange)>2),points(log2FoldChange, -log10(pvalue),pch=20,col="red")) 
+</pre>
+
+<p>Moreover, you can write you results table to a csv file, or create individual files of upregulated or downregulated genes based on specific thresholds that you can decide on. For example:</p>
+<pre>
+> write.table(resOrdered,file="resOrdered.csv", sep=";",row.names=TRUE, quote = FALSE, col.names=TRUE)
+
+##The following produce different files based on criteria adjusted p-value < 0.05 and Log2 Fold Change > 0.5, sorted by the adjusted p-value:
+> res_sig<-subset(res,padj<0.05)
+> res_sig_up<-subset(res_sig, log2FoldChange > 0.5)
+> res_sig_upOrdered<-res_sig_up[order(res_sig_up$padj),]
+> write.table(res_sig_upOrdered, file="res_sig_upOrdered.csv", sep=";",row.names=TRUE, quote = FALSE, col.names=TRUE)
+
+
+> res_sig_down<-subset(res_sig, log2FoldChange < 0.5)
+> res_sig_downOrdered<-res_sig_down[order(res_sig_down$padj),]
+> write.table(res_sig_downOrdered, file="res_sig_downOrdered.csv", sep=";",row.names=TRUE, quote = FALSE, col.names=TRUE)
+</pre>
+
+<p>You can then open the CSV files in MS Excel or LibreOffice Calc and examine the results. Please note that you must adjust the column headers.</p>
+
+<br>
+<br>
+<h2>References</h2>
+
+<p>
+1	Moradali MF, Ghods S, Rehm BH. Pseudomonas aeruginosa Lifestyle: A Paradigm for Adaptation, Survival, and Persistence. Front Cell Infect Microbiol. 2017; 7: 39.</p>
+<p>2	Tenover FC, Nicolau DP, Gill CM. Carbapenemase-producing Pseudomonas aeruginosa -an emerging challenge. Emerg Microbes Infect. 2022; 11: 811-814.</p>
+<p>3	Tomczyk S, Zanichelli V, Grayson ML, et al. Control of Carbapenem-resistant Enterobacteriaceae, Acinetobacter baumannii, and Pseudomonas aeruginosa in Healthcare Facilities: A Systematic Review and Reanalysis of Quasi-experimental Studies. Clin Infect Dis. 2019; 68: 873-884.</p>
+<p>4	Azam MW, Khan AU. Updates on the pathogenicity status of Pseudomonas aeruginosa. Drug Discov Today. 2019; 24: 350-359.</p>
+<p>5	Tortuel D, Tahrioui A, David A, et al. Pf4 Phage Variant Infection Reduces Virulence-Associated Traits in Pseudomonas aeruginosa. Microbiol Spectr. 2022; 10: e0154822.</p>
+<p>6	Anders S, Pyl PT, Huber W. HTSeq--a Python framework to work with high-throughput sequencing data. Bioinformatics. 2015; 31: 166-169.</p>
+<p>7	Love MI, Huber W, Anders S. Moderated estimation of fold change and dispersion for RNA-seq data with DESeq2. Genome Biol. 2014; 15: 550.</p>
+<p>8	Robinson MD, McCarthy DJ, Smyth GK. edgeR: a Bioconductor package for differential expression analysis of digital gene expression data. Bioinformatics. 2010; 26: 139-140.</p>
+
+
+
+
+
+
+
+
+<a href="index.html" target="_blank"><<-HOME</a>
+</body>
+</html>

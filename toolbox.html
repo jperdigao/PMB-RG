@@ -12,7 +12,7 @@
 
 <div class="top-bar" >
 
-	<h1>PATHOGEN MULTIOMICS AND BIOINFORMATICS</h1>
+	<h1 align="center">INTRODUCTION TO TUBERCULOSIS GENOMIC EPIDEMIOLOGY</h1>
 </div>
 
 <div class="container1" >
@@ -30,19 +30,20 @@
 </h1>
 </div>
 <a href="index.html" target="_blank"><<-HOME</a>
-<p> Click <a href="pdfs/Course_Doc_Module3.pdf" target="_blank">here</a> to download the PDF version of this tutorial.</p>
+<p> Click <a href="pdfs/Course_doc_all.pdf.pdf" target="_blank">here</a> to download the full course documentation conatining this tutorial.</p>
 
 <h2>Introduction</h2>
 
-<p> As NGS sequencing is becoming simpler and cheaper, increasing volumes of WGS data for bacterial pathogens such as M. tuberculosis are being generated. However, a significant part of the existing bottleneck lies within the analytical stage and the challenge for clinical and public health laboratories in accessing, extracting and interpreting the relevant and meaningful information. To bridge this gap, over last years several tools have been developed and described aiming at an audience with limited bioinformatic skills. These resources are, foremost, dedicated to the prediction of drug resistance from sequence data although other tools aiming at a genotypic characterization have been described as well. While some of these tools have also been deployed on an online server thus enabling easy access using a Guided User Interface (GUI) and remote analytical processing. Some mere examples of such tools for Tuberculosis:</p>
+<p> As NGS sequencing is becoming simpler and cheaper, increasing volumes of WGS data for bacterial pathogens such as M. tuberculosis are being generated . However, a significant part of the existing bottleneck lies within the analytical stage and the challenge for clinical and public health laboratories in accessing, extracting and interpreting the relevant and meaningful information. To bridge this gap, over the last years several tools have been developed and described aiming at an audience with limited bioinformatic skills [1, 2]. These resources are, foremost, dedicated to the prediction of drug resistance from sequence data although other tools aiming at a genotypic characterization have been described as well. While some of these tools have also been deployed on an online server thus enabling easy access using a Guided User Interface (GUI) and remote analytical processing. Some mere examples of such tools for TB:</p>
 
-<p>•	<b>TBprofiler</b> – enables drug resistance prediction, (sub)lineage assignament from raw read data. Features an online version and a standalone, locally deployable, command-line version;</p>
+<p>•	<b>TBprofiler</b> – enables drug resistance prediction, (sub)lineage assignament from raw read data. Features an online version and a standalone, locally deployable, command-line version[3];</p>
 
-<p>•	<b>PhyResSE</b> – uses the same philosophy as TBprofiler and also reports strain lineage and antibiotic resistance;
+<p>•	<b>PhyResSE</b> – uses the same philosophy as TBprofiler and also reports strain lineage and antibiotic resistance[4];
 </p>
 
-<p>•	<b>Mykrobe Predictor</b> – also reporting drug resistance and lineage from reads, this software runs locally;</p>
-<p>•	<b>SpoTyping and Spolpred</b> – these two tools report the spoligotyping profile from read data. Spotyping can query SITVIT database for SIT/Clade assignement for the obtained profile; </p>
+<p>•	<b>Mykrobe Predictor</b> – also reporting drug resistance and lineage from reads, this software runs locally[5];</p>
+<p>•	<b>SpoTyping and Spolpred</b> – these two tools report the spoligotyping profile from read data. Spotyping can query SITVIT database for SIT/Clade assignement for the obtained profile[6, 7]; </p>
+
 <p> The downside of these tools is the limitation, to different degrees, of customizing the pipeline and the analytical workflow in case there is the need to perform additional steps or different parameters. Also, the caveat to the use of these resources also lies in the need for the critical interpretation of the results that are obtained.</p>
 <p>In addition, other tools of more general use are also available for other pathogens, envisaging the detection of plasmid replicons, drug resistance genes and even for the analysis of the gene content across the core/pan genomes. This enables rapid extraction of important genotypic data that can be of clinical or epidemiological importance. </p>
 <p>This module will cover the use of selected available tools as examples for the plethora of tools already made available and maintained by the scientific community. Some of these tools are presently implemented or being across diagnosis or public health microbiology laboratories worldwide. </p>
@@ -205,11 +206,11 @@ As soon as TB Profiler completes you can check the results outputted to the resu
 Before you go and look at them let’s also run the TB profiler pipeline for the other strains as it will take some time:
 </p>
 <pre>
-$ tb-profiler profile -1 PT000040_1.fastq.gz -p PT000040 --txt –csv
+$ tb-profiler profile -1 PT000040_1.fastq.gz -p PT000040 --txt --csv
 
-$ tb-profiler profile -1 PT000286_1.fastq.gz -p PT000286 --txt –csv
+$ tb-profiler profile -1 PT000286_1.fastq.gz -p PT000286 --txt --csv
 
-$ tb-profiler profile -1 ERR1034816_1.fastq.gz -p ERR1034816 --txt –csv
+$ tb-profiler profile -1 ERR1034816_1.fastq.gz -p ERR1034816 --txt --csv
 
 $ conda deactivate
 </pre>
@@ -238,7 +239,7 @@ What are your conclusions?
 <p>There are different tools available for detection and characterization of the genetic determinants, some implemented in online servers with a graphical interface. By now you should be accustomed with these command-line tools which allow for a more precise parametrization and can be deployed into programmatic use in a pipeline or to large datasets.</p>
 <p>Now, all the tools we will now use rely, in one way or another, on BLAST tools. The VM you are using has all BLAST tools installed and allow you to run these locally. As such, these tools end-up by acting as BLAST parsers with some additional features.</p>
 <p>The most important caveat to take in account here: these tools are only as good as the databases that are associated. What does it mean? It is useless to be looking for OXA-181 carbapenemase coding genes or the mrk gene clusters if the database does not have those. Also, the annotation of the genes in the database will allow you to integrate additional.</p>
-<p>Enough with the talk and let’s do some practical work. We will start by using AMRFinderPlus, which implements blastx that takes nucleotide sequences as input and searches across a protein database. This will be the way to go if you need to identify specific alleles (e.g. KPC-2 vs KPC-3) of different resistance genes which only differ in the amino-acid sequence. Doing blastn (nucleotide blast) may also work but it may lead to the wrong identification if synonymous mutations are present. The downside is that this tool is somewhat slower, but it draws all of its database from the NCBI curated database of AMR determinants.</p>
+<p>Enough with the talk and let’s do some practical work. We will start by using AMRFinderPlus, which implements blastx that takes nucleotide sequences as input and searches across a protein database [8]. This will be the way to go if you need to identify specific alleles (e.g. KPC-2 vs KPC-3) of different resistance genes which only differ in the amino-acid sequence. Doing blastn (nucleotide blast) may also work but it may lead to the wrong identification if synonymous mutations are present. The downside is that this tool is somewhat slower, but it draws all of its database from the NCBI curated database of AMR determinants.</p>
 <p>Let’s try!</p>
 
 <pre>
@@ -299,7 +300,7 @@ $ kleborate-runner.py --all -a *.fasta -o kleborate_results.tsv
 </pre>
 
 <p>
-Let’s examine the output of Kleborate. Besides species identification and assembly statistics, the output contains:</p>
+Let’s examine the output of Kleborate [9, 10]. Besides species identification and assembly statistics, the output contains:</p>
 <p>•	ST</p>
 <p>•	Virulence and resistance scores</p>
 <p>•	Presence/absence of specific virulence genes</p>
@@ -390,7 +391,7 @@ Tips: Notice that the -cd option controls the percentage of isolates a gene must
 <br>
 <h2>Optional Exercise:</h2>
 <h2>Exercise 7 - Pan/Core genome and Comparative Gene Content Analysis </h2>
-<p>This optional exercise uses the Roary pipeline for calculation of the pan genome across a set of samples. As input Roary takes GFF3 files which are annotation files (you may recall these from Module 2), ideally produced by Prokka.  </p>
+<p>This optional exercise uses the Roary pipeline for calculation of the pan genome across a set of samples. As input Roary takes GFF3 files which are annotation files (you may recall these from Module 2), ideally produced by Prokka [11-13].</p>
 <p>Take a look at roary’s options:</p>
 <img src="images/roary_options.JPG" alt="Roary Options List">
 <p>You may have noticed that multiple options are available and besides the analysis of the pan-genome, roary can also produce a core genome alignment. Depending on the approach which can be useful for the phylogenetic analysis module in this course. </p>
@@ -444,4 +445,27 @@ $ snp-sites -o core_gene_alignment_segregant.aln core_gene_alignment.aln
 </code>
 </pre>
 
+<br>
+<br>
+<h2>References</h2>
+
+<p>1	van Heusden P, Mashologu Z, Lose T, Warren R, Christoffels A. The COMBAT-TB Workbench: Making Powerful Mycobacterium tuberculosis Bioinformatics Accessible. mSphere. 2022; 7: e0099121.</p>
+<p>2	Groschel MI, Owens M, Freschi L, et al. GenTB: A user-friendly genome-based predictor for tuberculosis resistance powered by machine learning. Genome Med. 2021; 13: 138.</p>
+<p>3	Coll F, McNerney R, Preston MD, et al. Rapid determination of anti-tuberculosis drug resistance from whole-genome sequences. Genome Med. 2015; 7: 51.</p>
+<p>4	Feuerriegel S, Schleusener V, Beckert P, et al. PhyResSE: a Web Tool Delineating Mycobacterium tuberculosis Antibiotic Resistance and Lineage from Whole-Genome Sequencing Data. J Clin Microbiol. 2015; 53: 1908-1914.</p>
+<p>5	Hunt M, Bradley P, Lapierre SG, et al. Antibiotic resistance prediction for Mycobacterium tuberculosis from genome sequence data with Mykrobe. Wellcome Open Res. 2019; 4: 191.</p>
+<p>6	Coll F, Mallard K, Preston MD, et al. SpolPred: rapid and accurate prediction of Mycobacterium tuberculosis spoligotypes from short genomic sequences. Bioinformatics. 2012; 28: 2991-2993.</p>
+<p>7	Xia E, Teo YY, Ong RT. SpoTyping: fast and accurate in silico Mycobacterium spoligotyping from sequence reads. Genome Med. 2016; 8: 19.</p>
+<p>8	Feldgarden M, Brover V, Gonzalez-Escalona N, et al. AMRFinderPlus and the Reference Gene Catalog facilitate examination of the genomic links among antimicrobial resistance, stress response, and virulence. Sci Rep. 2021; 11: 12728.</p>
+<p>9	Lam MMC, Wick RR, Watts SC, Cerdeira LT, Wyres KL, Holt KE. A genomic surveillance framework and genotyping tool for Klebsiella pneumoniae and its related species complex. Nat Commun. 2021; 12: 4188.
+<p>10	Wyres KL, Wick RR, Gorrie C, et al. Identification of Klebsiella capsule synthesis loci from whole genome data. Microb Genom. 2016; 2: e000102.</p>
+<p>11	Sitto F, Battistuzzi FU. Estimating Pangenomes with Roary. Mol Biol Evol. 2020; 37: 933-939.
+<p>12	Page AJ, Cummins CA, Hunt M, et al. Roary: rapid large-scale prokaryote pan genome analysis. Bioinformatics. 2015; 31: 3691-3693.</p>
+<p>13	Seemann T. Prokka: rapid prokaryotic genome annotation. Bioinformatics. 2014; 30: 2068-2069.</p>
+
+
+
+
 <a href="index.html" target="_blank"><<-HOME</a>
+</body>
+</html>
