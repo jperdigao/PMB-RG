@@ -295,7 +295,7 @@ $ R
 
 <pre>
 > res <- res[!is.na(res$padj),]
-> resOrdered <- res[order(res$pvalue),]
+> resOrdered <- res[order(res$adj),]
 > resOrdered
 </pre>
 

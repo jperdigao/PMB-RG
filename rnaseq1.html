@@ -282,7 +282,7 @@ $ R
 
 <pre>
 > res <- res[!is.na(res$padj),]
-> resOrdered <- res[order(res$pvalue),]
+> resOrdered <- res[order(res$padj),]
 > resOrdered
 </pre>
 
