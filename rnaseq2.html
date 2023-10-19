@@ -357,7 +357,7 @@ $ R
 > write.table(res_sig_upOrdered, file="res_sig_upOrdered.csv", sep=";",row.names=TRUE, quote = FALSE, col.names=TRUE)
 
 
-> res_sig_down<-subset(res_sig, log2FoldChange < 0.5)
+> res_sig_down<-subset(res_sig, log2FoldChange < -0.5)
 > res_sig_downOrdered<-res_sig_down[order(res_sig_down$padj),]
 > write.table(res_sig_downOrdered, file="res_sig_downOrdered.csv", sep=";",row.names=TRUE, quote = FALSE, col.names=TRUE)
 </pre>
